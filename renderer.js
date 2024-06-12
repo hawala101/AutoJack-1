@@ -40,9 +40,22 @@ ipcRenderer.on('update-action', (event, { action, round, winPercentage, losePerc
     }
 });
 
-ipcRenderer.on('game-over', (event, totalBet) => {
+ipcRenderer.on('game-over', (event, { roundTotalBet, totalBet, totalWin, playthroughRate }) => {
+    const rtpElement = document.getElementById('current-rtp');
     const unplayedInput = document.getElementById('unplayed-input');
+    const estimatedTimeElement = document.getElementById('estimated-time');
+
+    //const rtp = totalBet > 0 ? ((totalWin / totalBet) * 100).toFixed(2) : 0;
+    const rtp = ((totalWin / totalBet) * 100).toFixed(2);
+    rtpElement.textContent = `Current RTP: ${rtp}%`;
+
     let unplayedBalance = parseFloat(unplayedInput.value) || 0;
-    unplayedBalance -= totalBet;
+    unplayedBalance -= roundTotalBet;
     unplayedInput.value = unplayedBalance.toFixed(2);
+
+    let timeLeft = (unplayedBalance / playthroughRate);
+
+    // calculate time left based on amount of remaining chips and playthrough
+    //estimatedTimeElement.textContent = `Estimated Time: ${(playthroughRate).toFixed(2)} hours`;
+    estimatedTimeElement.textContent = `Estimated Time: ${timeLeft.toFixed(2)} hours`;
 });

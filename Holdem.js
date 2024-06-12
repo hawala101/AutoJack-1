@@ -13,11 +13,20 @@ let roundSummary = {
     balanceBefore: 0,
     balanceAfter: 0,
 };
+let totalBet = 0;  // Running total of amount bet
+let totalWin = 0;  // Running total of amount won
+
+let startTime = Date.now();
+
+function calculatePlaythroughRate(totalBet) {
+    const elapsedTime = (Date.now() - startTime) / (1000 * 60 * 60); // in hours
+    return totalBet / elapsedTime;
+}
 
 async function createWindow() {
     mainWindow = new BrowserWindow({
         width: 1200,
-        height: 400,
+        height: 200, // Set the height to 200px
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -199,18 +208,17 @@ async function run() {
                             mainWindow.webContents.send('update-action', { action, round, winPercentage, losePercentage, tiePercentage });
                             break;
                         case 'GAMEOVER':
-                            // Summarize the round
-                            roundSummary.totalBet = responseBody.spin.total_bet;
-                            roundSummary.totalWin = responseBody.spin.total_win;
-                            roundSummary.balanceBefore = responseBody.balance.before;
-                            roundSummary.balanceAfter = responseBody.balance.after;
+                            const roundTotalBet = responseBody.spin.total_bet;
+                            const roundTotalWin = responseBody.spin.total_win;
 
-                            log('\nGAME OVER - Round Summary:', roundSummary);
+                            totalBet += roundTotalBet;
+                            totalWin += roundTotalWin;
 
-                            // Send the totalBet to the renderer process
-                            mainWindow.webContents.send('game-over', roundSummary.totalBet);
+                            const playthroughRate = calculatePlaythroughRate(totalBet);
+                            console.log(`Playthrough Rate: ${playthroughRate.toFixed(2)} chips/hour`);
 
-                            // Reset for the next round
+                            mainWindow.webContents.send('game-over', { roundTotalBet, totalBet, totalWin, playthroughRate });
+
                             playerCards = [];
                             communityCards = [];
                             isGameActive = false;

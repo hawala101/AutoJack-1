@@ -29,15 +29,15 @@
         }
         .indicator-container {
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
             width: 100%;
         }
         .indicator {
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             border: 3px solid #333;
             border-radius: 10px;
             font-size: 18px;
@@ -45,7 +45,7 @@
             color: #333;
             background-color: #fff;
             transition: background-color 0.3s, color 0.3s;
-            margin: 10px;
+            margin: 5px;
         }
         .indicator.active {
             background-color: #28a745;
@@ -80,6 +80,22 @@
             padding: 5px;
             width: 100px;
         }
+        .rtp-box {
+            width: 100%;
+            text-align: center;
+            font-size: 16px;
+            margin-top: 10px;
+            padding: 5px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        .indicator { margin: 5px; }
+        .rtp-box { margin-top: 10px; }
+        .estimated-time {
+            font-size: 16px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -96,11 +112,13 @@
                 <div id="raise-indicator" class="indicator">Raise</div>
                 <div id="check-indicator" class="indicator">Check</div>
             </div>
+            <div class="rtp-box" id="current-rtp">Current RTP: 0.00%</div>
         </div>
         <div class="column">
             <div class="placeholder-container">
                 <div class="placeholder">Unplayed:</div>
                 <input id="unplayed-input" type="number" class="text-box" value="0">
+                <div id="estimated-time" class="estimated-time">Estimated Time: 0.00 hours</div>
             </div>
         </div>
     </div>
