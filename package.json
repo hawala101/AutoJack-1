@@ -5,6 +5,7 @@
         "start": "electron .",
         "start:luckyland": "electron LuckyLand.js",
         "start:chumba": "electron Chumba.js",
+        "start:holdem": "electron Holdem.js",
         "start:ChadMode": "concurrently \"npm run start:chumba\" \"npm run start:luckyland\"",
         "start:luckyland:legacy": "cross-env LEGACY_MODE=true electron LuckyLand.js",
         "start:chumba:legacy": "cross-env LEGACY_MODE=true electron Chumba.js",

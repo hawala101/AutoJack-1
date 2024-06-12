@@ -1,4 +1,5 @@
-# AutomaticBlackJack 🃏
+# AutomaticBlackJack AND HOLDEM! 🃏
+## This is a new branch of the incredible work done by camheff to create an autoblackjack player. This piggybacks on his existing work and modifies it to work for playing Texas Holdem Bonus on McLuck. As of now, it doesn't have functionality to play on HM, but this could easily be added if the feature is requested.
 
 ![Gif Demo](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcXp4aHAyeGthcHJ1ZGMwNzIzMWp4eGEwaTc3YTZscDYzZTFhbnFkNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3rxOqVKVTFYPIeP5wk/giphy-downsized-large.gif)
 
@@ -121,6 +122,24 @@ npm run start:chumba
 -   You need to have your remote debugging Chrome window **_opened_** at either chumba or luckyland **_before_** running this command (I run the command when im on the BJ page).
 -   Only have **one single window/tab** opened per Casino, having multiple tabs open on the same site will likely mess things up.
 
+### HOLDEM MODE
+To run holdem mode, install as you would for luckyland/chumba. 
+
+Go to the McLuck homepage, (NOT THE HOLDEM PAGE)
+then run:
+
+```bash
+npm run start:Holdem
+```
+
+The holdem UI window will open.
+
+If you want the game to track your unplayed balance, you can enter it in the box. Make sure you deselect the box when you're done entering.
+I can't figure out how to get the balance automatically, but this way you can update it whenever you want -- changes to unplayed balance are calculated at the end of each round.
+
+**DISCLAIMER: I have done a decent amount of testing on this, but pay attention to the percentages etc. while you're playing, I don't claim this to be foolproof or without error! 
+Best of luck!**
+
 #### CHAD MODE 💪
 
 -   Try it out with:
@@ -166,6 +185,12 @@ npm run start:chumba
 
 ```bash
 npm run start:ChadMode
+```
+
+**_For Holdem_**:
+
+```bash
+npm run start:Holdem
 ```
 
 -   **_(IF YOU GET AN ERROR MESSAGE ABOUT GPU CACHE DONT WORRY, ITS NOT AN ISSUE)_**

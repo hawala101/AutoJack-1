@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poker Strategy</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+        }
+        .column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 33%;
+        }
+        .indicator-container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+        }
+        .indicator {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100px;
+            height: 100px;
+            border: 3px solid #333;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            background-color: #fff;
+            transition: background-color 0.3s, color 0.3s;
+            margin: 10px;
+        }
+        .indicator.active {
+            background-color: #28a745;
+            color: #fff;
+        }
+        .indicator.inactive {
+            background-color: #dc3545;
+            color: #fff;
+        }
+        .percentage-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        .percentage {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+        .placeholder-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        .placeholder {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+        .text-box {
+            font-size: 16px;
+            padding: 5px;
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="column">
+            <div class="percentage-container">
+                <div id="win-percentage" class="percentage">Win: 0%</div>
+                <div id="lose-percentage" class="percentage">Lose: 0%</div>
+                <div id="tie-percentage" class="percentage">Tie: 0%</div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="indicator-container">
+                <div id="raise-indicator" class="indicator">Raise</div>
+                <div id="check-indicator" class="indicator">Check</div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="placeholder-container">
+                <div class="placeholder">Unplayed:</div>
+                <input id="unplayed-input" type="number" class="text-box" value="0">
+            </div>
+        </div>
+    </div>
+    <script src="renderer.js"></script>
+</body>
+</html>
