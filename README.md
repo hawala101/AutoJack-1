@@ -1,5 +1,7 @@
 # AutomaticBlackJack AND HOLDEM! 🃏
-## This is a new branch of the incredible work done by camheff to create an autoblackjack player. This piggybacks on his existing work and modifies it to work for playing Texas Holdem Bonus on McLuck. As of now, it doesn't have functionality to play on HM, but this could easily be added if the feature is requested. This script uses the calculator at beatingbonuses.com to generate its results. I have done a lot of testing, but I don't claim it to be free of bugs. Keep the calculator open and check its work as you play, at least until you're comfortable.
+## This is a new branch of the incredible work done by camheff to create an autoblackjack player. This piggybacks on his existing work and modifies it to work for playing Texas Holdem Bonus on McLuck. As of now, it doesn't have functionality to play on HM, but this could easily be added if the feature is requested. 
+
+**This script uses the calculator at beatingbonuses.com to generate its results. I have done a lot of testing, but I don't claim it to be free of bugs. Keep the calculator open and check its work as you play, at least until you're comfortable.**
 
 ![Gif Demo](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcXp4aHAyeGthcHJ1ZGMwNzIzMWp4eGEwaTc3YTZscDYzZTFhbnFkNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3rxOqVKVTFYPIeP5wk/giphy-downsized-large.gif)
 
