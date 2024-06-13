@@ -127,7 +127,7 @@ npm run start:chumba
 ### HOLDEM MODE
 To run holdem mode, install as you would for luckyland/chumba. 
 
-Go to the McLuck homepage, (NOT THE HOLDEM PAGE)
+Go to your chosen B2 homepage,
 then run:
 
 ```bash
@@ -135,6 +135,8 @@ npm run start:Holdem
 ```
 
 The holdem UI window will open.
+
+Select your site from the dropdown menu. Press Connect. If the connection is successful, you will see a message below the dropdown menu saying "Connected to [site]". If not, ya done did something wrong.
 
 If you want the game to track your unplayed balance, you can enter it in the box. Make sure you deselect the box when you're done entering.
 I can't figure out how to get the balance automatically, but this way you can update it whenever you want -- changes to unplayed balance are calculated at the end of each round.

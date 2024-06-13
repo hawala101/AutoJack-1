@@ -127,130 +127,9 @@ async function determineBestStrategy(playerCards, communityCards, round) {
     return { action: 'Play?', winPercentage: 0, losePercentage: 0, tiePercentage: 0 };
 }
 
-/*
-async function run() {
-    // Get webSocketDebuggerUrl
-    const response = await axios.get('http://127.0.0.1:9222/json/version');
-    const webSocketDebuggerUrl = response.data.webSocketDebuggerUrl;
-
-    const browser = await puppeteer.connect({
-        browserWSEndpoint: webSocketDebuggerUrl,
-        defaultViewport: null,
-    });
-
-    log('Connecting to browser');
-    const pages = await browser.pages();
-    log('Pages:', pages.map(page => page.url()));
-
-    const targetPage = pages.find(page => page.url().includes('mcluck'));
-    if (!targetPage) {
-        log('Target page not found');
-        return;
-    }
-    log('Connected to page:', targetPage.url());
-
-    targetPage.on('response', async (response) => {
-        if (response.url().includes('texasholdempoker3d')) {
-            let text;
-            try {
-                text = await response.text();
-            } catch (error) {
-                log('Error fetching response body:', error);
-                return;
-            }
-
-            let responseBody;
-            try {
-                responseBody = JSON.parse(text);
-            } catch (error) {
-                log('Error parsing response body:', error);
-                return;
-            }
-
-            if (responseBody.spin) {
-                const dealerStatus = responseBody.spin.dealer.status;
-                const mutualCards = responseBody.spin.dealer.mutual_cards;
-
-                if (dealerStatus === 'PLAY' && !isGameActive) {
-                    // New game starts
-                    isGameActive = true;
-                    log('New game started');
-                }
-
-                if (isGameActive) {
-                    // Convert playerCards to array
-                    playerCards = Object.values(responseBody.spin.hands[0].cards);
-                    let round = '';
-
-                    switch (dealerStatus) {
-                        case 'PLAY':
-                            if (Object.keys(mutualCards).length === 0) {
-                                // Pre-flop
-                                round = 'Pre-flop';
-                                log('Pre-flop - Player Cards:', playerCards);
-                            } else if (Object.keys(mutualCards).length === 3) {
-                                // Flop
-                                communityCards = Object.values(mutualCards);
-                                round = 'Flop';
-                                log('Flop - Community Cards:', communityCards);
-                            } else if (Object.keys(mutualCards).length === 4) {
-                                // Turn
-                                communityCards = Object.values(mutualCards);
-                                round = 'Turn';
-                                log('Turn - Community Cards:', communityCards);
-                            } else if (Object.keys(mutualCards).length === 5) {
-                                // River
-                                communityCards = Object.values(mutualCards);
-                                round = 'River';
-                                log('River - Community Cards:', communityCards);
-                            }
-
-                            // Call the strategy function
-                            const { action, winPercentage, losePercentage, tiePercentage } = await determineBestStrategy(playerCards, communityCards, round);
-                            log(`Action: ${action}`);
-
-                            // Send the action to the renderer process
-                            mainWindow.webContents.send('update-action', { action, round, winPercentage, losePercentage, tiePercentage });
-                            break;
-                        case 'GAMEOVER':
-                            const roundTotalBet = responseBody.spin.total_bet;
-                            const roundTotalWin = responseBody.spin.total_win;
-
-                            totalBet += roundTotalBet;
-                            totalWin += roundTotalWin;
-
-                            const playthroughRate = calculatePlaythroughRate(totalBet);
-                            console.log(`Playthrough Rate: ${playthroughRate.toFixed(2)} chips/hour`);
-
-                            const win = roundTotalWin > 0 ? 1 : 0;
-                            const lose = roundTotalWin === 0 ? 1 : 0;
-                            let tie = 0;
-                            if (win == 0 && lose == 0) {
-                                tie = 1;
-                            }
-
-                            gamesWon += win;
-                            gamesLost += lose;
-                            gamesTied += tie;
-                            log(gamesWon, gamesLost, gamesTied);
-
-                            mainWindow.webContents.send('game-over', { roundTotalBet, totalBet, totalWin, playthroughRate, gamesWon, gamesLost, gamesTied });
-
-                            playerCards = [];
-                            communityCards = [];
-                            isGameActive = false;
-                            break;
-                        default:
-                            log('Unknown dealer status:', dealerStatus);
-                    }
-                }
-            }
-        }
-    });
-}
-*/
-
 async function run(game) {
+    mainWindow.webContents.send('connection-status', `Attempting to connect to ${game}...`);
+    
     // Get webSocketDebuggerUrl
     const response = await axios.get('http://127.0.0.1:9222/json/version');
     const webSocketDebuggerUrl = response.data.webSocketDebuggerUrl;
@@ -266,10 +145,16 @@ async function run(game) {
 
     const targetPage = pages.find(page => page.url().includes(game));
     if (!targetPage) {
-        log('Target page not found');
+        const message = `Target page for ${game} not found.`;
+        log(message);
+        mainWindow.webContents.send('connection-status', message);
         return;
     }
-    log(`Connected to page: ${targetPage.url()} for game: ${game}`);
+
+    //const message = `Connected to ${game} at ${targetPage.url()}`;
+    const message = `Connected to ${game}`;
+    log(message);
+    mainWindow.webContents.send('connection-status', message);
 
     targetPage.on('response', async (response) => {
         if (response.url().includes('texasholdempoker3d')) {
@@ -371,18 +256,13 @@ async function run(game) {
     });
 }
 
-
-/*
 app.whenReady().then(async () => {
     await createWindow();
-    await run();
-});
-*/
 
-ipcMain.on('start-connection', (event, game) => {
-    run(game);
+    ipcMain.on('start-connection', async (event, game) => {
+        await run(game);
+    });
 });
-
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {

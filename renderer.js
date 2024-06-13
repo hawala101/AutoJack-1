@@ -86,3 +86,9 @@ document.getElementById('start-button').addEventListener('click', () => {
     console.log(`Connect button pressed. Game selected: ${game}`);
     ipcRenderer.send('start-connection', game);
 });
+
+// Add listener for connection status
+ipcRenderer.on('connection-status', (event, message) => {
+    const connectionStatusElement = document.getElementById('connection-status');
+    connectionStatusElement.textContent = message;
+});
