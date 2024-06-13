@@ -4,6 +4,7 @@ let winCount = 0;
 let loseCount = 0;
 let tieCount = 0;
 
+// Handle the "update-action" event from the main process
 ipcRenderer.on('update-action', (event, { action, round, winPercentage, losePercentage, tiePercentage }) => {
     const raiseIndicator = document.getElementById('raise-indicator');
     const checkIndicator = document.getElementById('check-indicator');
@@ -44,6 +45,7 @@ ipcRenderer.on('update-action', (event, { action, round, winPercentage, losePerc
     }
 });
 
+// Handle the "game-over" event from the main process
 ipcRenderer.on('game-over', (event, { roundTotalBet, totalBet, totalWin, playthroughRate, gamesWon, gamesLost, gamesTied }) => {
     const rtpElement = document.getElementById('current-rtp');
     const unplayedInput = document.getElementById('unplayed-input');
@@ -76,4 +78,11 @@ ipcRenderer.on('game-over', (event, { roundTotalBet, totalBet, totalWin, playthr
 
     // Update the estimated time element
     estimatedTimeElement.textContent = `Estimated Time: ${formattedTime}`;
+});
+
+// Handle the "Connect" button click event
+document.getElementById('start-button').addEventListener('click', () => {
+    const game = document.getElementById('game-select').value;
+    console.log(`Connect button pressed. Game selected: ${game}`);
+    ipcRenderer.send('start-connection', game);
 });

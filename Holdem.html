@@ -75,6 +75,11 @@
             align-items: center;
             width: 100%;
         }
+        .dropdown-container {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
         .placeholder {
             font-size: 16px;
             margin: 5px 0;
@@ -104,12 +109,10 @@
             font-size: 16px;
             padding: 5px;
             width: 150px;
-            margin-top: 10px;
         }
         .start-button {
             font-size: 16px;
             padding: 5px;
-            margin-top: 10px;
             margin-left: 10px;
             cursor: pointer;
         }
@@ -141,12 +144,14 @@
                 <div class="placeholder">Unplayed:</div>
                 <input id="unplayed-input" type="number" class="text-box" value="0">
                 <div id="estimated-time" class="estimated-time">Estimated Time: N/A</div>
-                <select id="game-select" class="dropdown">
-                    <option value="mcluck">mcluck</option>
-                    <option value="hellomillions">hellomillions</option>
-                    <option value="scratchful">scratchful</option>
-                </select>
-                <button id="start-button" class="start-button">Connect</button>
+                <div class="dropdown-container">
+                    <select id="game-select" class="dropdown">
+                        <option value="mcluck">mcluck</option>
+                        <option value="hellomillions">hellomillions</option>
+                        <option value="scratchful">scratchful</option>
+                    </select>
+                    <button id="start-button" class="start-button">Connect</button>
+                </div>
             </div>
         </div>
     </div>
