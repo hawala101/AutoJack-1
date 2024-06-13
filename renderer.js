@@ -1,5 +1,9 @@
 const { ipcRenderer } = require('electron');
 
+let winCount = 0;
+let loseCount = 0;
+let tieCount = 0;
+
 ipcRenderer.on('update-action', (event, { action, round, winPercentage, losePercentage, tiePercentage }) => {
     const raiseIndicator = document.getElementById('raise-indicator');
     const checkIndicator = document.getElementById('check-indicator');
@@ -40,22 +44,36 @@ ipcRenderer.on('update-action', (event, { action, round, winPercentage, losePerc
     }
 });
 
-ipcRenderer.on('game-over', (event, { roundTotalBet, totalBet, totalWin, playthroughRate }) => {
+ipcRenderer.on('game-over', (event, { roundTotalBet, totalBet, totalWin, playthroughRate, gamesWon, gamesLost, gamesTied }) => {
     const rtpElement = document.getElementById('current-rtp');
     const unplayedInput = document.getElementById('unplayed-input');
     const estimatedTimeElement = document.getElementById('estimated-time');
+    const winRecordElement = document.getElementById('win-record');
+    const loseRecordElement = document.getElementById('lose-record');
+    const tieRecordElement = document.getElementById('tie-record');
 
-    //const rtp = totalBet > 0 ? ((totalWin / totalBet) * 100).toFixed(2) : 0;
-    const rtp = ((totalWin / totalBet) * 100).toFixed(2);
+    // Update RTP
+    const rtp = totalBet > 0 ? ((totalWin / totalBet) * 100).toFixed(2) : 0;
     rtpElement.textContent = `Current RTP: ${rtp}%`;
 
+    // Update Unplayed balance
     let unplayedBalance = parseFloat(unplayedInput.value) || 0;
     unplayedBalance -= roundTotalBet;
     unplayedInput.value = unplayedBalance.toFixed(2);
+    
+    winRecordElement.textContent = `W: ${gamesWon}`;
+    loseRecordElement.textContent = `L: ${gamesLost}`;
+    tieRecordElement.textContent = `T: ${gamesTied}`;
 
-    let timeLeft = (unplayedBalance / playthroughRate);
+    let timeLeft = unplayedBalance / playthroughRate;
 
-    // calculate time left based on amount of remaining chips and playthrough
-    //estimatedTimeElement.textContent = `Estimated Time: ${(playthroughRate).toFixed(2)} hours`;
-    estimatedTimeElement.textContent = `Estimated Time: ${timeLeft.toFixed(2)} hours`;
+    // Convert decimal hours to hours and minutes
+    let hours = Math.floor(timeLeft);
+    let minutes = Math.floor((timeLeft - hours) * 60);
+
+    // Format hours and minutes
+    let formattedTime = `${hours}:${minutes < 10 ? '0' : ''}${minutes}`;
+
+    // Update the estimated time element
+    estimatedTimeElement.textContent = `Estimated Time: ${formattedTime}`;
 });

@@ -27,12 +27,12 @@
             align-items: center;
             width: 33%;
         }
-        .indicator-container {
+        .indicator-container, .track-record-container {
             display: flex;
             justify-content: center;
             width: 100%;
         }
-        .indicator {
+        .indicator, .track-record-box {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -54,6 +54,10 @@
         .indicator.inactive {
             background-color: #dc3545;
             color: #fff;
+        }
+        .track-record-box {
+            width: 80px;
+            height: 40px;
         }
         .percentage-container {
             display: flex;
@@ -90,11 +94,24 @@
             border-radius: 5px;
             background-color: #fff;
         }
-        .indicator { margin: 5px; }
+        .indicator, .track-record-box { margin: 5px; }
         .rtp-box { margin-top: 10px; }
         .estimated-time {
             font-size: 16px;
             margin-top: 10px;
+        }
+        .dropdown {
+            font-size: 16px;
+            padding: 5px;
+            width: 150px;
+            margin-top: 10px;
+        }
+        .start-button {
+            font-size: 16px;
+            padding: 5px;
+            margin-top: 10px;
+            margin-left: 10px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -105,6 +122,11 @@
                 <div id="win-percentage" class="percentage">Win: 0%</div>
                 <div id="lose-percentage" class="percentage">Lose: 0%</div>
                 <div id="tie-percentage" class="percentage">Tie: 0%</div>
+            </div>
+            <div class="track-record-container">
+                <div id="win-record" class="track-record-box">W: 0</div>
+                <div id="lose-record" class="track-record-box">L: 0</div>
+                <div id="tie-record" class="track-record-box">T: 0</div>
             </div>
         </div>
         <div class="column">
@@ -118,7 +140,13 @@
             <div class="placeholder-container">
                 <div class="placeholder">Unplayed:</div>
                 <input id="unplayed-input" type="number" class="text-box" value="0">
-                <div id="estimated-time" class="estimated-time">Estimated Time: 0.00 hours</div>
+                <div id="estimated-time" class="estimated-time">Estimated Time: N/A</div>
+                <select id="game-select" class="dropdown">
+                    <option value="mcluck">mcluck</option>
+                    <option value="hellomillions">hellomillions</option>
+                    <option value="scratchful">scratchful</option>
+                </select>
+                <button id="start-button" class="start-button">Connect</button>
             </div>
         </div>
     </div>

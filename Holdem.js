@@ -16,6 +16,10 @@ let roundSummary = {
 let totalBet = 0;  // Running total of amount bet
 let totalWin = 0;  // Running total of amount won
 
+let gamesWon = 0;
+let gamesLost = 0;
+let gamesTied = 0;
+
 let startTime = Date.now();
 
 function calculatePlaythroughRate(totalBet) {
@@ -217,7 +221,19 @@ async function run() {
                             const playthroughRate = calculatePlaythroughRate(totalBet);
                             console.log(`Playthrough Rate: ${playthroughRate.toFixed(2)} chips/hour`);
 
-                            mainWindow.webContents.send('game-over', { roundTotalBet, totalBet, totalWin, playthroughRate });
+                            const win = roundTotalWin > 0 ? 1 : 0;
+                            const lose = roundTotalWin === 0 ? 1 : 0;
+                            let tie = 0;
+                            if (win == 0 && lose == 0) {
+                                tie = 1;
+                            }
+
+                            gamesWon += win;
+                            gamesLost += lose;
+                            gamesTied += tie;
+                            log(gamesWon, gamesLost, gamesTied);
+
+                            mainWindow.webContents.send('game-over', { roundTotalBet, totalBet, totalWin, playthroughRate, gamesWon, gamesLost, gamesTied });
 
                             playerCards = [];
                             communityCards = [];
