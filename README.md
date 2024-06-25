@@ -1,5 +1,5 @@
 # AutomaticBlackJack AND HOLDEM! 🃏
-## This is a new branch of the incredible work done by camheff to create an autoblackjack player. This piggybacks on his existing work and modifies it to work for playing Texas Holdem Bonus on McLuck. As of now, it doesn't have functionality to play on HM, but this could easily be added if the feature is requested. 
+## This is a new branch of the incredible work done by camheff to create an autoblackjack player. This piggybacks on his existing work and modifies it to work for playing Texas Holdem Bonus. You can use this for any one of the 3 B2 sites, just use the dropdown menu to establish a connection to your chosen site.
 
 **This script uses the calculator at beatingbonuses.com to generate its results. I have done a lot of testing, but I don't claim it to be free of bugs. Keep the calculator open and check its work as you play, at least until you're comfortable.**
 
@@ -131,7 +131,7 @@ Go to your chosen B2 homepage,
 then run:
 
 ```bash
-npm run start:Holdem
+npm run start:holdem
 ```
 
 The holdem UI window will open.
