@@ -229,10 +229,10 @@ async function run(game) {
                             const playthroughRate = calculatePlaythroughRate(totalBet);
                             console.log(`Playthrough Rate: ${playthroughRate.toFixed(2)} chips/hour`);
 
-                            const win = roundTotalWin > 0 ? 1 : 0;
+                            const win = roundTotalWin > roundTotalBet ? 1 : 0;
                             const lose = roundTotalWin === 0 ? 1 : 0;
                             let tie = 0;
-                            if (win == 0 && lose == 0) {
+                            if (win == 0 && lose == 0 && roundTotalWin == roundTotalBet) {
                                 tie = 1;
                             }
 
